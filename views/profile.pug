@@ -1,0 +1,70 @@
+extends layout
+
+block content
+  body
+    header
+      .w3-bar.w3-black
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/") Home
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/genrelist") Genre List
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/alphabeticlist") A-Z List
+        button.w3-bar-item.w3-button.w3-red.w3-right.w3-padding-16(onclick="document.getElementById('id01').style.display='block'") Login
+        #id01.w3-modal
+          .w3-modal-content.w3-card-4.w3-animate-zoom.w3-black(style="max-width:600px")
+            .w3-center
+              br
+              span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id01').style.display='none'" title="Close Modal") ×
+            form.w3-container(action="/action_page.php")
+              .w3-section
+                label
+                  b Username
+                input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Enter Username" name="usrname" required="")
+                label
+                  b Password
+                input.w3-input.w3-border(type="password" placeholder="Enter Password" name="psw" required="")
+                button.w3-button.w3-block.w3-green.w3-section.w3-padding(type="submit") Login
+                input.w3-check.w3-margin-top(type="checkbox" checked="checked")
+                |  Remember me?
+            .w3-container.w3-border-top.w3-padding-16.w3-black
+              button.w3-button.w3-red(onclick="document.getElementById('id01').style.display='none'" type="button") Cancel
+              span.w3-right.w3-padding.w3-hide-small
+                | Forgot 
+                a(href="#") password?
+        a.w3-bar-item.w3-button.w3-blue.w3-right.w3-padding-16(href="#")
+          i.fas.fa-search
+        input.w3-bar-item.w3-input.w3-right.w3-padding-16(type="text" placeholder="Search..")
+    .w3-content
+      .w3-row
+        .w3-col.m4.l3
+          img(src=series.cover style="width:220px;height:330px;")
+        .w3-col.m8.l9
+          h1=series.name
+          p=series.description
+          hr
+          div
+            strong Tags:
+            for t, i in series.tags
+              p=t 
+            
+      hr
+      .w3-row
+        .w3-col.m4.l3
+          div
+            strong Episode List
+            .w3-content(style="height:30px")
+              ul
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+                li PENDEJO
+        .w3-col.m8.l9
+          .w3-black(style="padding-top: 56.25%;")

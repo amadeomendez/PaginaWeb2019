@@ -1,0 +1,16 @@
+body {
+      background-color: #2a174f;
+      font-family: 'Oswald', sans-serif;
+      font-size: 110%;
+      color: white;
+  }
+
+.mySlides {
+    display: none;
+}
+
+.center {
+  margin: auto;
+  width: 60%;
+  padding: 10px;
+}
