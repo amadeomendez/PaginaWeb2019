@@ -4,7 +4,7 @@ let seasonSchema = mongoose.Schema({
 	name:        { type:  String , required: true },
 	description: { type:  String , required: true },
 	tags:        { type: [String], required: true },
-	episodes:    { type:  Number , required: true },
+	episodes:    { type: [String], required: true },
 	cover:       { type:  String , required: true }
 });
 

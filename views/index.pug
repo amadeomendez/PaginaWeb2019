@@ -39,7 +39,17 @@ block content
     section.w3-content.w3-display-container
       each s, i in seasons
         a(href="/series/" + s._id)
-          img.mySlides.w3-center.w3-animate-top(src=s.cover style="width:322px;height:450px;", href="/series/" + s._id)
+          .w3-row.mySlides
+            .w3-col.m4.l3
+              img.w3-animate-top(src=s.cover style="width:322px;height:450px;", href="/series/" + s._id)
+            .w3-col.m8.l9
+              h1=s.name
+              p=s.description
+              hr
+              div
+                strong Tags:
+                for t, i in s.tags
+                  p=t 
         button.w3-button.w3-display-left.w3-white.w3-opacity-min(onclick="plusDivs(-1)") ◁
         button.w3-button.w3-display-right.w3-white.w3-opacity-min(onclick="plusDivs(+1)") ▷
     script.
@@ -78,8 +88,9 @@ block content
       x[slideIndex - 1].style.display = "block";
       }
     // Lista de Shows en Homepage
-    each s, i in seasons
-      .w3-row
+
+    .w3-row
+      each s, i in seasons
         .w3-col.s4
           .w3-container
             .w3-card-4(style="width:75%; border: 2px solid dark-blue; border-radius: 8px;")
@@ -88,7 +99,7 @@ block content
                 img(src=s.cover alt="Imagen" style="width:222px;height:350px;")
                 .w3-section
                   button.w3-button.w3-green Save to List
-                  a.w3-button.w3-red(href="profile.html") Start Watching
+                  a.w3-button.w3-red(href="/series/" + s._id) Start Watching
     // Footer
     footer.w3-container.w3-black(style="bottom:0;width:100%")
       a.w3-bar-item.w3-button.w3-blue.w3-right(href="https://github.com/amadeomendez/PaginaWeb2019")
