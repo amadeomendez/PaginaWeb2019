@@ -5,7 +5,7 @@ const path = require('path');
 const app = express();
 
 // Connect to database
-mongoose.connect('mongodb://localhost/weebstream',
+mongoose.connect('mongodb+srv://user:1234@cluster0-tv0hq.mongodb.net/test?retryWrites=true&w=majority',
 	{useNewUrlParser: true, useUnifiedTopology: true});
 let db = mongoose.connection;
 db.once('open', () => { console.log('Connected successfully to database'); });
