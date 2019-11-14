@@ -80,11 +80,17 @@ block content
         h2#E E
         hr
         h2#F F
-        hr
+        each s, i in seasons
+          if s.name[0] == 'F'
+            a(href='/series/' + s._id)=s.name
         h2#G G
-        hr
+        each s, i in seasons
+          if s.name[0] == 'G'
+            a(href='/series/' + s._id)=s.name
         h2#H H
-        hr
+        each s, i in seasons
+          if s.name[0] == 'H'
+            a(href='/series/' + s._id)=s.name
         h2#I I
         hr
         h2#J J
@@ -114,7 +120,9 @@ block content
         h2#S S
         hr
         h2#T T
-        hr
+        each s, i in seasons
+          if s.name[0] == 'T'
+            a(href='/series/' + s._id)=s.name
         h2#U U
         hr
         h2#V V
