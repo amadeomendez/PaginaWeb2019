@@ -55,10 +55,17 @@ app.get('/series/:id', (req, res) => {
   });
 });
 
-app.get('/userList.html', (req, res) => { res.render('userList'); });
+app.get('/userList', (req, res) => { res.render('userList'); });
 
 app.get('/search/', (req, res) => {
 	Season.find({}, (err, seasons) => {
+		if (err) console.log(err);
+		else res.send(seasons);
+	});
+});
+
+app.get('/search/:query', (req, res) => {
+	Season.find({ name: RegExp(req.params.query, 'i') }, (err, seasons) => {
 		if (err) console.log(err);
 		else res.send(seasons);
 	});
