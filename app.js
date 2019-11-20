@@ -48,6 +48,8 @@ app.get('/alphabeticlist', (req, res) => {
 
 app.get('/genrelist', (req, res) => { res.render('genreList'); });
 
+app.get('/searchpage', (req, res) => { res.render('searchPage'); });
+
 app.get('/series/:id', (req, res) => {
   Season.findById(req.params.id, (err, series) => {
     if (err) console.log(err);

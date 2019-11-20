@@ -30,26 +30,20 @@ block content
               span.w3-right.w3-padding.w3-hide-small
                 | Forgot 
                 a(href="#") password?
-        a.w3-bar-item.w3-button.w3-blue.w3-right.w3-padding-16(href="#")
-          i.fas.fa-search
-        input.w3-bar-item.w3-input.w3-right.w3-padding-16(type="text" placeholder="Search..")
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/searchpage") Search for Titles
     br
     br
     // Slideshow de Contenido (3)
     section.w3-content.w3-display-container
       each s, i in seasons
         a(href="/series/" + s._id)
-          .w3-row.mySlides
-            .w3-col.m4.l3
+          .w3-row-padding.mySlides
+            .w3-col.s4
               img.w3-animate-top(src=s.cover style="width:322px;height:450px;", href="/series/" + s._id)
-            .w3-col.m8.l9
+            .w3-col.s8
               h1=s.name
               p=s.description
-              hr
-              div
-                strong Tags:
-                for t, i in s.tags
-                  p=t 
+              hr 
         button.w3-button.w3-display-left.w3-white.w3-opacity-min(onclick="plusDivs(-1)") ◁
         button.w3-button.w3-display-right.w3-white.w3-opacity-min(onclick="plusDivs(+1)") ▷
     script.

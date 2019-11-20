@@ -29,9 +29,7 @@ block content
               span.w3-right.w3-padding.w3-hide-small
                 | Forgot 
                 a(href="#") password?
-        a.w3-bar-item.w3-button.w3-blue.w3-right.w3-padding-16(href="#")
-          i.fas.fa-search
-        input.w3-bar-item.w3-input.w3-right.w3-padding-16(type="text" placeholder="Search..")
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/searchpage") Search for Titles
     .w3-container.center
       h1 Alphabetic List
       hr
@@ -83,14 +81,17 @@ block content
         each s, i in seasons
           if s.name[0] == 'F'
             a(href='/series/' + s._id)=s.name
+        hr
         h2#G G
         each s, i in seasons
           if s.name[0] == 'G'
             a(href='/series/' + s._id)=s.name
+        hr
         h2#H H
         each s, i in seasons
           if s.name[0] == 'H'
             a(href='/series/' + s._id)=s.name
+        hr
         h2#I I
         hr
         h2#J J
@@ -123,6 +124,7 @@ block content
         each s, i in seasons
           if s.name[0] == 'T'
             a(href='/series/' + s._id)=s.name
+        hr
         h2#U U
         hr
         h2#V V

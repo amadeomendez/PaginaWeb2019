@@ -1,15 +1,10 @@
 extends layout
 
 block content
-
-  script.
-    function updatePlayer(link)
-    {
-    let Player = document.getElementById('reproductor');
-    Player.outerHTML = '<iframe allow="autoplay; fullscreen" allowfullscreen="yes" style="width: 100%; height: 100%;" src="' + link + '" frameborder="no"></iframe>';
-    }
   body
-    header
+    // Barra de Navegación
+    // a.w3-bar-item.w3-button.w3-blue.w3-right.w3-padding-16(href="#") i.fas.fa-search input.w3-bar-item.w3-input.w3-right.w3-padding-16(type="text" placeholder="Search..")
+    header.w3-top
       .w3-bar.w3-black
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/") Home
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/genrelist") Genre List
@@ -23,7 +18,7 @@ block content
             form.w3-container(action="/action_page.php")
               .w3-section
                 label
-                  b Username
+                  b Usernames
                 input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Enter Username" name="usrname" required="")
                 label
                   b Password
@@ -37,27 +32,51 @@ block content
                 | Forgot 
                 a(href="#") password?
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/searchpage") Search for Titles
-    .w3-content
-      .w3-row
-        .w3-col.m4.l3
-          img(src=series.cover style="width:220px;height:330px;")
-        .w3-col.m8.l9
-          h1=series.name
-          p=series.description
-          hr
-          div
-            strong Tags:
-            for t, i in series.tags
-              p=t 
-            
+    br
+    br
+    .w3-container.center
+      h1 Search for Titles
       hr
-      .w3-row(style="height:100%")
-        .w3-col.m4.l3
-          div
-            strong Episode List
-            .w3-content(style="height:30px")
-              ul
-                for e, i in series.episodes
-                  button(onClick='updatePlayer("'+e+'")')= "Episode " + i+1
-        .w3-col.m8.l9
-          #reproductor.w3-black(style="padding-top: 56.25%;")
+      .form-group
+        input#search.form-control.form-control-lg.w3-bar-item.w3-input.w3-padding-16(type="text" placeholder="Search..")
+      #match-list
+    script.
+      const search = document.getElementById('search');
+      const matchList = document.getElementById('match-list');
+      
+      // Search the JSON result from the backend
+      const searchStates = async searchText => {
+        const res = await fetch('/search/');
+        const states = await res.json();
+        
+        // Get matches to current text input
+        let matches = states.filter(state => {
+          const regex = new RegExp(`^${searchText}`, 'gi');
+          return state.name.match(regex);
+        });
+        
+        if(searchText.length === 0) {
+          matches = [];
+        }
+        
+        console.log(matches);
+        
+        outputHtml(matches);
+      };
+      
+      // Show results in HTML
+      
+      const outputHtml = matches => {
+        if(matches.length > 0) {
+          const html = matches.map(match => `
+          <a href='/series/${match._id}'> ${match.name} </a>
+          `
+          ).join('');
+          
+          matchList.innerHTML = html;
+        }
+      };
+      
+      search.addEventListener('input', () => searchStates(search.value));
+
+      
