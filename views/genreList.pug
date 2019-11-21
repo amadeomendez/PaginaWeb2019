@@ -33,46 +33,94 @@ block content
     .w3-container.center
       h1 Genre List
       hr
-      small
-        a.w3-button.w3-blue(href="#") Action 
-        a.w3-button.w3-blue(href="#") Adventure 
-        a.w3-button.w3-blue(href="#") Cars 
-        a.w3-button.w3-blue(href="#") Comedy 
-        a.w3-button.w3-blue(href="#") Dementia 
-        a.w3-button.w3-blue(href="#") Demons 
-        a.w3-button.w3-blue(href="#") Drama 
-        a.w3-button.w3-blue(href="#") Ecchi 
-        a.w3-button.w3-blue(href="#") Fantasy 
-        a.w3-button.w3-blue(href="#") Game 
-        a.w3-button.w3-blue(href="#") Harem 
-        a.w3-button.w3-blue(href="#") Historical 
-        a.w3-button.w3-blue(href="#") Horror 
-        a.w3-button.w3-blue(href="#") Josei 
-        a.w3-button.w3-blue(href="#") Kids 
-        a.w3-button.w3-blue(href="#") Magic 
-        a.w3-button.w3-blue(href="#") Martial Arts 
-        a.w3-button.w3-blue(href="#") Mecha 
-        a.w3-button.w3-blue(href="#") Military 
-        a.w3-button.w3-blue(href="#") Music 
-        a.w3-button.w3-blue(href="#") Mystery 
-        a.w3-button.w3-blue(href="#") Parody 
-        a.w3-button.w3-blue(href="#") Police 
-        a.w3-button.w3-blue(href="#") Psychological 
-        a.w3-button.w3-blue(href="#") Romance 
-        a.w3-button.w3-blue(href="#") Samurai 
-        a.w3-button.w3-blue(href="#") School 
-        a.w3-button.w3-blue(href="#") Sci-Fi
-        a.w3-button.w3-blue(href="#") Seinen
-        a.w3-button.w3-blue(href="#") Shoujo
-        a.w3-button.w3-blue(href="#") Shoujo Ai
-        a.w3-button.w3-blue(href="#") Shounen
-        a.w3-button.w3-blue(href="#") Shounen Ai
-        a.w3-button.w3-blue(href="#") Slice of Life
-        a.w3-button.w3-blue(href="#") Space
-        a.w3-button.w3-blue(href="#") Sports
-        a.w3-button.w3-blue(href="#") Super Power
-        a.w3-button.w3-blue(href="#") Supernatural
-        a.w3-button.w3-blue(href="#") Thriller
-        a.w3-button.w3-blue(href="#") Vampire
-        a.w3-button.w3-blue(href="#") Yaoi
-        a.w3-button.w3-blue(href="#") Yuri
+      select#search-genre.w3-select()
+        option(value="" disabled selected ) Select a Genre
+        option(value="Action"        ) Action      
+        option(value="Adventure"     ) Adventure    
+        option(value="Cars"          ) Cars
+        option(value="Comedy"        ) Comedy       
+        option(value="Dementia"      ) Dementia     
+        option(value="Demons"        ) Demons       
+        option(value="Drama"         ) Drama         
+        option(value="Ecchi"         ) Ecchi         
+        option(value="Fantasy"       ) Fantasy        
+        option(value="Game"          ) Game          
+        option(value="Harem"         ) Harem         
+        option(value="Historical"    ) Historical    
+        option(value="Horror"        ) Horror        
+        option(value="Josei"         ) Josei         
+        option(value="Kids"          ) Kids          
+        option(value="Magic"         ) Magic         
+        option(value="Martial Arts"  ) Martial Arts  
+        option(value="Mecha"         ) Mecha         
+        option(value="Military"      ) Military       
+        option(value="Music"         ) Music         
+        option(value="Mystery"       ) Mystery       
+        option(value="Parody"        ) Parody        
+        option(value="Police"        ) Police        
+        option(value="Psychological" ) Psychological  
+        option(value="Romance"       ) Romance       
+        option(value="Samurai"       ) Samurai       
+        option(value="School"        ) School        
+        option(value="Sci-Fi"        ) Sci-Fi       
+        option(value="Seinen"        ) Seinen       
+        option(value="Shoujo"        ) Shoujo       
+        option(value="Shoujo Ai"     ) Shoujo Ai    
+        option(value="Shounen"       ) Shounen      
+        option(value="Shounen Ai"    ) Shounen Ai   
+        option(value="Slice of Life" ) Slice of Life 
+        option(value="Space"         ) Space        
+        option(value="Sports"        ) Sports       
+        option(value="Super Power"   ) Super Power  
+        option(value="Supernatural"  ) Supernatural 
+        option(value="Thriller"      ) Thriller     
+        option(value="Vampire"       ) Vampire      
+        option(value="Yaoi"          ) Yaoi         
+        option(value="Yuri"          ) Yuri        
+      #match-list-genre 
+      script.
+        const search = document.getElementById('search-genre');
+        const matchList = document.getElementById('match-list-genre');
+        
+        // Search the JSON result from the backend
+        const searchStates = async searchText => {
+          const res = await fetch('/search/');
+          const states = await res.json();
+          
+          // Get matches to current text input
+          let matches = states.filter(state => {
+            for (let value of state.tags) {
+              if(value == search.value){
+                return state.name;
+              }
+            }
+          });
+          
+          if(searchText.length === 0) {
+            matches = [];
+            if(matches == null){
+              matchList.innerHTML = '';
+            }
+          }
+          
+          console.log(matches);
+          
+          outputHtml(matches);
+        };
+        
+        // Show results in HTML
+        
+        const outputHtml = matches => {
+          if(matches.length > 0) {
+            const html = matches.map(match => `
+            <a href='/series/${match._id}'> ${match.name} </a>
+            `
+            ).join('<hr>');
+            
+            matchList.innerHTML = html;
+          }
+        };
+        
+        search.addEventListener('input', () => searchStates(search.value));
+        
+        
