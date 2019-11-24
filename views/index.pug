@@ -8,28 +8,7 @@ block content
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/") Home
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/genrelist") Genre List
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/alphabeticlist") A-Z List
-        button.w3-bar-item.w3-button.w3-red.w3-right.w3-padding-16(onclick="document.getElementById('id01').style.display='block'") Login
-        #id01.w3-modal
-          .w3-modal-content.w3-card-4.w3-animate-zoom.w3-black(style="max-width:600px")
-            .w3-center
-              br
-              span.w3-button.w3-xlarge.w3-hover-red.w3-display-topright(onclick="document.getElementById('id01').style.display='none'" title="Close Modal") ×
-            form.w3-container(action="/action_page.php")
-              .w3-section
-                label
-                  b Usernames
-                input.w3-input.w3-border.w3-margin-bottom(type="text" placeholder="Enter Username" name="usrname" required="")
-                label
-                  b Password
-                input.w3-input.w3-border(type="password" placeholder="Enter Password" name="psw" required="")
-                button.w3-button.w3-block.w3-green.w3-section.w3-padding(type="submit") Login
-                input.w3-check.w3-margin-top(type="checkbox" checked="checked")
-                |  Remember me?
-            .w3-container.w3-border-top.w3-padding-16.w3-black
-              button.w3-button.w3-red(onclick="document.getElementById('id01').style.display='none'" type="button") Cancel
-              span.w3-right.w3-padding.w3-hide-small
-                | Forgot 
-                a(href="#") password?
+        a.w3-bar-item.w3-button.w3-red.w3-right.w3-padding-16(href="/login") Login
         a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/searchpage") Search for Titles
     br
     br

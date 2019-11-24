@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  body
+    // Barra de Navegación
+    header.w3-top
+      .w3-bar.w3-black
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/") Home
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/genrelist") Genre List
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/alphabeticlist") A-Z List
+    br
+    br
+    .w3-content
+      .w3-section
+        h1 Welcome
+        p Create an account or login
+        a.w3-button.w3-red.w3-padding(href='/register') Register
+        a.w3-button.w3-red.w3-padding(href='/login') Login

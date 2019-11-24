@@ -1,0 +1,29 @@
+extends layout
+
+block content
+
+  body
+    // Barra de Navegación
+    header.w3-top
+      .w3-bar.w3-black
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/") Home
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/genrelist") Genre List
+        a.w3-bar-item.w3-button.w3-blue.w3-padding-16(href="/alphabeticlist") A-Z List
+    br
+    br
+    .w3-content
+      h1 Login
+      form(action='/login', method='POST')
+        .form-group
+          label(for='email') Email
+          br
+          input#email.form-control(type='email', name='email', placeholder='Enter Email')
+        .form-group
+          label(for='password') Password
+          br
+          input#password.form-control(type='password', name='password', placeholder='Enter Password')
+        br
+        button(type='submit') Login
+      p
+        | No Account? 
+        a(href='/register') Register

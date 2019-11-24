@@ -1,8 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const bcrypt = require('bcryptjs');
+const flash = require('connect-flash');
+const session = require('express-session');
+const passport = require('passport');
+const { ensureAuthenticated } = require('./config/auth');
 
 const app = express();
+
+require('./config/passport')(passport);
 
 // Connect to database
 mongoose.connect('mongodb+srv://user:1234@cluster0-tv0hq.mongodb.net/test?retryWrites=true&w=majority',
@@ -14,6 +21,7 @@ db.on('error', (err) => { console.log(err); });
 // Load models
 //let EpisodeList = require('./models/episodelist');
 let Season = require('./models/season');
+let User = require('./models/User');
 
 // Load view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +30,17 @@ app.set('view engine', 'pug');
 // Parse application/json and application/x-www-form-urlencoded
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(flash());
 
 // Set public folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -72,6 +91,82 @@ app.get('/search/:query', (req, res) => {
 		else res.send(seasons);
 	});
 });
+
+app.get('/dashboard', ensureAuthenticated, (req, res) =>
+  res.render('userDashboard', {
+    user: req.user
+  })
+);
+
+app.get('/user', (req, res) => { res.render('userScreen'); });
+
+app.get('/login', (req, res) => { res.render('loginScreen'); });
+
+app.get('/register', (req, res) => { res.render('registerScreen'); });
+
+// Register
+app.post('/register', (req, res) => {
+  const { name, email, password, password2 } = req.body;
+  let errors = [];
+
+  if (!name || !email || !password || !password2) {
+    errors.push({ msg: 'Please enter all fields' });
+  }
+
+  if (password != password2) {
+    errors.push({ msg: 'Passwords do not match' });
+  }
+
+  if (password.length < 6) {
+    errors.push({ msg: 'Password must be at least 6 characters' });
+  }
+
+  if (errors.length > 0) {
+    res.render('registerScreen');
+  } else {
+    User.findOne({ email: email }).then(user => {
+      if (user) {
+        errors.push({ msg: 'Email already exists' });
+        res.render('registerScreen');
+      } else {
+        const newUser = new User({
+          name,
+          email,
+          password
+        });
+
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err;
+            newUser.password = hash;
+            newUser
+              .save()
+              .then(user => {
+                res.redirect('/login');
+              })
+              .catch(err => console.log(err));
+          });
+        });
+      }
+    });
+  }
+});
+
+// Login
+app.post('/login', (req, res, next) => {
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+// Logout
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/login');
+});
+
 
 // Start server
 const PORT = process.env.PORT || 3000;
